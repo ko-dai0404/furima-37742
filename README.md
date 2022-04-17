@@ -63,5 +63,6 @@
 
 ### Association
 
-- has_one :item
-- has_one :shipping_information
+- belongs_to :user
+- belongs_to :item
+- belongs_to ::shipping_information
