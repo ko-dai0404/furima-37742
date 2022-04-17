@@ -52,7 +52,7 @@
 
 ### Association
 
-- has_one :purchase_record
+- belongs_to :purchase_record
 
 # purchase_records テーブル
 
@@ -65,4 +65,4 @@
 
 - belongs_to :user
 - belongs_to :item
-- belongs_to ::shipping_information
+- has_one :shipping_information
