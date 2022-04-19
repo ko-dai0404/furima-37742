@@ -61,11 +61,11 @@ RSpec.describe User, type: :model do
     end
 
     it '重複したemailが存在する場合は登録できない' do
-    @user.save
+      @user.save
       user2 = FactoryBot.build(:user)
       user2.email = @user.email
       user2.valid?
-      expect(user2.errors.full_messages).to include("Email has already been taken")
+      expect(user2.errors.full_messages).to include('Email has already been taken')
     end
 
     it 'password_confirmationが空では登録できない' do
