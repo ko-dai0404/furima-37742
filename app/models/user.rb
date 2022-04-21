@@ -21,4 +21,6 @@ class User < ApplicationRecord
   NAME_KANA_REGEX = /\A[ァ-ヶー]+\z/
   validates_format_of :last_name_kana,   with: NAME_KANA_REGEX
   validates_format_of :first_name_kana,  with: NAME_KANA_REGEX
+
+  has_many :items
 end
