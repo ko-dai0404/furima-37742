@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit]
+  before_action :authenticate_user!, only: [:new, :edit, :destroy]
+  before_action :single_record, only: [:show, :edit, :update, :destroy]
   before_action :move_to_index, except: [:index, :new, :create, :show]
-  before_action :single_record, only: [:show, :edit, :update]
 
   def index
     @items = Item.includes(:user).order('created_at DESC')
@@ -34,6 +34,11 @@ class ItemsController < ApplicationController
     end
   end
 
+  def destroy
+    @item.destroy
+    redirect_to root_path
+  end
+
   private
 
   def item_params
@@ -41,12 +46,11 @@ class ItemsController < ApplicationController
                                  :shipping_id, :price).merge(user_id: current_user.id)
   end
 
-  def move_to_index
-    @item = Item.find(params[:id])
-    redirect_to action: :index unless current_user.id == @item.user.id
-  end
-
   def single_record
     @item = Item.find(params[:id])
+  end
+
+  def move_to_index
+    redirect_to action: :index unless current_user.id == @item.user.id
   end
 end
