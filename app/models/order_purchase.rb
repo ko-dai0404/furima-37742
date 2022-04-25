@@ -8,6 +8,8 @@ class OrderPurchase
   validates :city,           presence: true
   validates :address,        presence: true
   validates :telephone,      presence: true
+  validates :user_id,        presence: true
+  validates :item_id,        presence: true
 
   POSTAL_REGEX = /\A\d{3}-\d{4}\z/
   validates_format_of :postal, with: POSTAL_REGEX

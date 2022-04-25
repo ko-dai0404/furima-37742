@@ -1,11 +1,10 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index]
+  before_action :single_record, only: [:index, :create]
   before_action :move_to_root, except: [:show]
   before_action :move_to_root2, except: [:show]
 
-
   def index
-    @item = Item.find(params[:item_id])
     @order_purchase = OrderPurchase.new
   end
 
@@ -16,7 +15,6 @@ class OrdersController < ApplicationController
       @order_purchase.save
       redirect_to root_path
     else
-      @item = Item.find(params[:item_id])
       render :index
     end
   end
@@ -29,13 +27,17 @@ class OrdersController < ApplicationController
     )
   end
 
+  def single_record
+    @item = Item.find(params[:item_id])
+  end
+
   def move_to_root
     @item = Item.find(params[:item_id])
     redirect_to root_path if @item.purchase_record.present?
   end
 
   def move_to_root2
-  redirect_to root_path if current_user.id == @item.user.id
+    redirect_to root_path if current_user.id == @item.user.id
   end
 
   def pay_item

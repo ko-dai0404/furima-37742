@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe OrderPurchase, type: :model do
   before do
-    @order_purchase = FactoryBot.build(:order_purchase)
+    user = FactoryBot.create(:user)
+    @order_purchase = FactoryBot.build(:order_purchase, user_id: user.id)
   end
-
   describe '商品購入内容の保存' do
     context '商品が購入できる場合' do
       it '全ての項目があれば商品は購入される' do
@@ -88,6 +88,18 @@ RSpec.describe OrderPurchase, type: :model do
         @order_purchase.token = nil
         @order_purchase.valid?
         expect(@order_purchase.errors.full_messages).to include("Token can't be blank")
+      end
+
+      it 'user_idが紐付いていないと購入できない' do
+        @order_purchase.user_id = ''
+        @order_purchase.valid?
+        expect(@order_purchase.errors.full_messages).to include("User can't be blank")
+      end
+
+      it 'item_idが紐付いていないと購入できない' do
+        @order_purchase.item_id = ''
+        @order_purchase.valid?
+        expect(@order_purchase.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
