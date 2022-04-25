@@ -23,5 +23,4 @@ class User < ApplicationRecord
   validates_format_of :first_name_kana,  with: NAME_KANA_REGEX
 
   has_many :items
-  has_many :purchase_records
 end

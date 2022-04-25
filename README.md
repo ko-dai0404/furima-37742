@@ -38,17 +38,17 @@
 - has_one :purchase_record
 
 
-## orders テーブル
+## shipping_informations テーブル
 
-| Column          | Type         | Options                        |
-| --------------- | ------------ | ------------------------------ |
-| postal          | string       | null: false                    |
-| prefectures_id  | integer      | null: false                    |
-| city            | string       | null: false                    |
-| address         | string       | null: false                    |
-| building        | string       |                                |
-| telephone       | string       | null: false                    |
-| purchase_record | references   | null: false, foreign_key: true |
+| Column         | Type         | Options                        |
+| -------------- | ------------ | ------------------------------ |
+| postal         | string       | null: false                    |
+| prefectures_id | integer      | null: false                    |
+| city           | string       | null: false                    |
+| address        | string       | null: false                    |
+| building       | string       |                                |
+| telephone      | string       | null: false                    |
+| user           | references   | null: false, foreign_key: true |
 
 ### Association
 
@@ -65,4 +65,4 @@
 
 - belongs_to :user
 - belongs_to :item
-- has_one :order
+- has_one :shipping_information
