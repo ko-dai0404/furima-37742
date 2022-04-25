@@ -2,6 +2,7 @@ class OrderPurchase
   include ActiveModel::Model
   attr_accessor :postal, :prefectures_id, :city, :address, :building, :telephone, :user_id, :item_id, :token
 
+  validates :token,          presence: true
   validates :postal,         presence: true
   validates :prefectures_id, numericality: { other_than: 1, message: "can't be blank" }
   validates :city,           presence: true

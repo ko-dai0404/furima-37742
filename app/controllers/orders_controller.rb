@@ -1,6 +1,8 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index]
   before_action :move_to_root, except: [:show]
+  before_action :move_to_root2, except: [:show]
+
 
   def index
     @item = Item.find(params[:item_id])
@@ -10,6 +12,7 @@ class OrdersController < ApplicationController
   def create
     @order_purchase = OrderPurchase.new(order_params)
     if @order_purchase.valid?
+      pay_item
       @order_purchase.save
       redirect_to root_path
     else
@@ -29,5 +32,18 @@ class OrdersController < ApplicationController
   def move_to_root
     @item = Item.find(params[:item_id])
     redirect_to root_path if @item.purchase_record.present?
+  end
+
+  def move_to_root2
+  redirect_to root_path if current_user.id == @item.user.id
+  end
+
+  def pay_item
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    Payjp::Charge.create(
+      amount: @item.price,
+      card: order_params[:token],
+      currency: 'jpy'
+    )
   end
 end
