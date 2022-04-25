@@ -1,12 +1,10 @@
 class OrdersController < ApplicationController
-  binding.pry
   before_action :authenticate_user!, only: [:index]
-  before_action :move_to_root, except: [:index]
+  before_action :move_to_root, except: [:show]
 
   def index
     @item = Item.find(params[:item_id])
     @order_purchase = OrderPurchase.new
-
   end
 
   def create
@@ -29,7 +27,7 @@ class OrdersController < ApplicationController
   end
 
   def move_to_root
-    redirect_to root_path if current_user.id == @item.user.id
-    binding.pry
+    @item = Item.find(params[:item_id])
+    redirect_to root_path if @item.purchase_record.present?
   end
 end
