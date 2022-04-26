@@ -32,7 +32,6 @@ class OrdersController < ApplicationController
   end
 
   def move_to_root
-    @item = Item.find(params[:item_id])
     redirect_to root_path if @item.purchase_record.present?
   end
 

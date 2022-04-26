@@ -2,14 +2,17 @@ class OrderPurchase
   include ActiveModel::Model
   attr_accessor :postal, :prefectures_id, :city, :address, :building, :telephone, :user_id, :item_id, :token
 
-  validates :token,          presence: true
-  validates :postal,         presence: true
+  with_options presence: true do
+    validates :token
+    validates :postal
+    validates :city
+    validates :address
+    validates :telephone
+    validates :user_id
+    validates :item_id
+  end
+
   validates :prefectures_id, numericality: { other_than: 1, message: "can't be blank" }
-  validates :city,           presence: true
-  validates :address,        presence: true
-  validates :telephone,      presence: true
-  validates :user_id,        presence: true
-  validates :item_id,        presence: true
 
   POSTAL_REGEX = /\A\d{3}-\d{4}\z/
   validates_format_of :postal, with: POSTAL_REGEX
